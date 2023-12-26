@@ -36,7 +36,8 @@
     "pages/_app.tsx",
     "pages/index.tsx",
     "Components/UI/Navigation.jsx",
-    "Components/UI/TableOfContents/TableOfContents.jsx"
+    "Components/UI/TableOfContents/TableOfContents.jsx",
+    "next.config.js"
   ],
 
   "exclude": ["node_modules"]

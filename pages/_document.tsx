@@ -8,7 +8,7 @@ const Document: React.FC = () => {
         <Head>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
           {/* Google Analytics Code */}
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=G-PH29P82N32`} />
+          <script async src={`${process.env.ANALYTICS_URL}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -16,18 +16,14 @@ const Document: React.FC = () => {
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
 
-                gtag('config', 'G-PH29P82N32', {
+                gtag('config', '${process.env.ANALYTICS_ID}', {
                   page_path: window.location.pathname,
                 });
               `,
             }}
           />
           {/* Google Adsense Code In Below */}
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2687924945894784"
-            crossOrigin="anonymous"
-          ></script>
+          <script async src={process.env.ADSENSE_URL} crossOrigin="anonymous"></script>
         </Head>
         <body>
           <Main />

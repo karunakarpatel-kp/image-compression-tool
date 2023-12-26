@@ -17,7 +17,7 @@ export const getServerSideProps = ({ res }: any) => {
   pullURLAndLastUpdatedTime(SEO_OBJ);
 
   // Pull URLs from TataBlogPages
-  pullURLAndLastUpdatedTime(SEO_OBJ.TATA_HOMEPAGE.TATA_PAGES_OBJ);
+  // pullURLAndLastUpdatedTime(SEO_OBJ.TATA_HOMEPAGE.TATA_PAGES_OBJ);
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
