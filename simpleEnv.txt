@@ -1,0 +1,4 @@
+HOME_PAGE_BASE_URL= string;
+ANALYTICS_URL =string;
+ANALYTICS_ID= string;
+ADSENSE_URL= string;
