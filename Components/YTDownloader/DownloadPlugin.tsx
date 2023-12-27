@@ -1,48 +1,16 @@
 import { AddLink, Backspace } from "@mui/icons-material";
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from "@mui/material";
 import React, { useRef, useState } from "react";
+import { downloadVideo } from "yt-get";
 
-const URL = "https://youtu.be/tPEE9ZwTmy0?si=sUoY0k8I47petUoB";
-
-// export const handleDownload = async () => {
-//   try {
-//     const options: any = {
-//       url: "https://youtu.be/tPEE9ZwTmy0?si=sUoY0k8I47petUoB",
-//       folder: "downloads", // optional, default: "youtube-exec"
-//       filename: "filename", // optional, default: video title
-//       resolution: 720, // 144, 240, 360, 480, 720, 1080, 1440, 2160, or 4320; default: 480
-//     };
-//     const data = await youtubeDl(options);
-//     console.log("Video downloaded successfully! 🎥🎉", data);
-//   } catch (err) {
-//     console.error("An error occurred:", err);
-//   }
-// };
-
-const handleDownload = async () => {
-  const downloadData = {
-    url: "https://youtu.be/QntqP3PrW3c?si=5-nv8itZGbMq3R0T",
-    folder: "downloads",
-    filename: "filename",
-    resolution: 720,
-  };
-
-  try {
-    const response = await fetch("/api/download", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(downloadData),
+const handleDownload = () => {
+  fetch("/api/download")
+    .then(() => {
+      console.log("DOwnloaded From Client");
+    })
+    .catch((error: any) => {
+      console.log(error);
     });
-
-    const data = await response.json();
-    // setDownloadStatus(data.message || data.error);
-    console.log("IncomingDataRes@Client", data);
-  } catch (error) {
-    console.error("An error occurred From Client:", error);
-    // setDownloadStatus("Error downloading video");
-  }
 };
 
 const DownloadPlugin = () => {
@@ -57,7 +25,7 @@ const DownloadPlugin = () => {
     } else {
       setInputError(false);
       setUserInputLink(captureUserInput);
-      // handleDownload();
+      handleDownload();
     }
   };
 
