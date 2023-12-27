@@ -26,7 +26,8 @@
       "@Theme/*": ["Components/Theme/*"],
       "@UI/*": ["Components/UI/*"],
       "@Public/*": ["public/*"],
-      "@TataImages/*": ["pages/cars/tata/tataImages/*"]
+      "@TataImages/*": ["pages/cars/tata/tataImages/*"],
+      "@YTDownload/*": ["Components/YTDownloader/*"]
     }
   },
   "include": [

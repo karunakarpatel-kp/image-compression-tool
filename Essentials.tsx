@@ -55,6 +55,12 @@ interface Blog_Post_URL_Props {
 
   DISCLAIMER_PAGE_ABSOLUTE: string;
   DISCLAIMER_PAGE_RELATIVE: string;
+
+  IMAGE_COMPRESSION_PAGE_ABSOLUTE: string;
+  IMAGE_COMPRESSION_PAGE_RELATIVE: string;
+
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE_ABSOLUTE: string;
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE_RELATIVE: string;
 }
 
 export const blogPostURLS: Blog_Post_URL_Props = {
@@ -69,6 +75,12 @@ export const blogPostURLS: Blog_Post_URL_Props = {
 
   DISCLAIMER_PAGE_ABSOLUTE: `${BASE_URLS.HOME_PAGE_BASE_URL}/disclaimer`,
   DISCLAIMER_PAGE_RELATIVE: "/disclaimer",
+
+  IMAGE_COMPRESSION_PAGE_ABSOLUTE: `${BASE_URLS.HOME_PAGE_BASE_URL}/image-compression-tool`,
+  IMAGE_COMPRESSION_PAGE_RELATIVE: "/image-compression-tool",
+
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE_ABSOLUTE: `${BASE_URLS.HOME_PAGE_BASE_URL}/youtube-video-downloader`,
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE_RELATIVE: "/youtube-video-downloader",
 };
 
 interface Tag {
@@ -86,17 +98,29 @@ interface BlogPage {
   featuredImage: any;
   featuredImageAltText: string;
 }
+interface Tag {
+  tag: string;
+  href: string;
+}
 
 interface HomePage extends BlogPage {}
 interface PolicyPage extends BlogPage {}
 interface ContactPage extends BlogPage {}
 interface DisclaimerPage extends BlogPage {}
 
+interface ImageCompressionToolPage extends BlogPage {
+  tags: Tag[];
+}
+interface YoutubeVideoDownloadPage extends BlogPage {
+  tags: Tag[];
+}
 interface SEOObjProps {
   HOME_PAGE: HomePage;
   POLICY_PAGE: PolicyPage;
   CONTACT_PAGE: ContactPage;
   DISCLAIMER_PAGE: DisclaimerPage;
+  IMAGE_COMPRESSION_TOOL_PAGE: ImageCompressionToolPage;
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE: YoutubeVideoDownloadPage;
 }
 
 export const SEO_OBJ: SEOObjProps = {
@@ -148,23 +172,66 @@ export const SEO_OBJ: SEOObjProps = {
     featuredImage: vehicleMasti,
     featuredImageAltText: "a-person-with-computer",
   },
+
+  YOUTUBE_VIDEO_DOWNLOAD_PAGE: {
+    absoluteURL: blogPostURLS.YOUTUBE_VIDEO_DOWNLOAD_PAGE_ABSOLUTE,
+    relativeURL: blogPostURLS.YOUTUBE_VIDEO_DOWNLOAD_PAGE_RELATIVE,
+    title: "Youtube Video Downloader Page",
+    description: "Youtube Video Downloader Page Description in here",
+    lastUpdateTime: `${dynamicLastUpdatedTime()}`,
+    publishedTime: "2023-12-09T19:07:55+00:00",
+    featuredImage: vehicleMasti,
+    featuredImageAltText: "a-person-with-computer",
+    tags: [
+      { tag: "Youtube", href: "url" },
+      { tag: "Youtube Video Downloader", href: "url" },
+      { tag: "Video Downloader", href: "url" },
+    ],
+  },
+
+  IMAGE_COMPRESSION_TOOL_PAGE: {
+    absoluteURL: blogPostURLS.IMAGE_COMPRESSION_PAGE_ABSOLUTE,
+    relativeURL: blogPostURLS.IMAGE_COMPRESSION_PAGE_RELATIVE,
+    title: "Image Compression Tool",
+    description: "Image Compression Tool Description in here",
+    lastUpdateTime: `${dynamicLastUpdatedTime()}`,
+    publishedTime: "2023-12-09T19:07:55+00:00",
+    featuredImage: vehicleMasti,
+    featuredImageAltText: "a-person-with-computer",
+    tags: [
+      { tag: "Cars", href: "url" },
+      { tag: "Tata", href: "url" },
+      { tag: "Tata Safari", href: "url" },
+    ],
+  },
 };
 
 export const blogPostsObj = [
   {
     id: 0,
-    url: "simple url in here...!",
-    title: "Title",
-    description: "Descrption",
-    lastUpdateTime: "lastUpdated",
-    publishedTime: "published",
+    url: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.relativeURL,
+    title: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.title,
+    description: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.description,
+    lastUpdateTime: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.lastUpdateTime,
+    publishedTime: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.publishedTime,
+    tags: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.tags,
+    featuredImage: vehicleMasti,
+    featuredImageAltText: SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.featuredImageAltText,
+  },
+  {
+    id: 1,
+    url: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.relativeURL,
+    title: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.title,
+    description: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.description,
+    lastUpdateTime: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.lastUpdateTime,
+    publishedTime: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.publishedTime,
     tags: [
       { tag: "Cars", href: "url" },
       { tag: "Tata", href: "url" },
       { tag: "Tata Safari", href: "url" },
     ],
     featuredImage: vehicleMasti,
-    featuredImageAltText: "AlT",
+    featuredImageAltText: SEO_OBJ.IMAGE_COMPRESSION_TOOL_PAGE.featuredImageAltText,
   },
 
   // {

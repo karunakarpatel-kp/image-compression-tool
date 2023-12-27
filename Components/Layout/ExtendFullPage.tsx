@@ -14,30 +14,7 @@ interface FullpageBlogPostLayoutProps {
   children?: React.ReactNode;
 }
 
-const FullPageBlogPostLayout = (props: FullpageBlogPostLayoutProps) => {
-  let basePath = process.env.HOME_PAGE_BASE_URL;
-  let router = useRouter();
-  let completeURL = basePath + router.asPath;
-
-  const [showButton, setShowButon] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.pageYOffset > 600) {
-        setShowButon(true);
-      } else {
-        setShowButon(false);
-      }
-    });
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // for smoothly scrolling
-    });
-  };
-
+const ExtendFullPageLayout = (props: FullpageBlogPostLayoutProps) => {
   return (
     <ThemeProvider theme={Theme}>
       <Navigation />
@@ -47,7 +24,7 @@ const FullPageBlogPostLayout = (props: FullpageBlogPostLayoutProps) => {
           {/* Extra Space On The Left Side */}
         </Grid>
 
-        <Grid item xs={12} sm={11} md={10} lg={9} minHeight="100vh" border={0}>
+        <Grid item xs={12} sm={11} md={10} lg={9} minHeight="100vh">
           {/* Center Content */}
           {props.children}
 
@@ -85,4 +62,4 @@ const FullPageBlogPostLayout = (props: FullpageBlogPostLayoutProps) => {
   );
 };
 
-export default FullPageBlogPostLayout;
+export default ExtendFullPageLayout;
