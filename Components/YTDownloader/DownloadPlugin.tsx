@@ -1,22 +1,28 @@
+import Paragraph from "@Components/Elements/Paragraph/Paragraph";
 import { AddLink, Backspace } from "@mui/icons-material";
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from "@mui/material";
+import axios from "axios";
 import React, { useRef, useState } from "react";
-import { downloadVideo } from "yt-get";
-
-const handleDownload = () => {
-  fetch("/api/download")
-    .then(() => {
-      console.log("DOwnloaded From Client");
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-};
 
 const DownloadPlugin = () => {
   const userInputRef = useRef<HTMLInputElement>();
   const [userInputLink, setUserInputLink] = useState<string>("");
   const [inputError, setInputError] = useState<boolean>(false);
+  const [dataFromYT, setDataFromYT] = useState(null);
+
+  const handleDownload = async (incomingURL: string) => {
+    try {
+      const data: any = await axios.get(`/api/download?url=${incomingURL}`);
+      setDataFromYT(data);
+    } catch (error: any) {
+      if (error.response.status === 500) {
+        alert("Please Enter Correct Youtube URL");
+      }
+      if (error.response.status === 405) {
+        alert("Bad Request Broo..!");
+      }
+    }
+  };
 
   const onStartClickHandler = () => {
     const captureUserInput = userInputRef.current!.value;
@@ -25,7 +31,7 @@ const DownloadPlugin = () => {
     } else {
       setInputError(false);
       setUserInputLink(captureUserInput);
-      handleDownload();
+      handleDownload(captureUserInput);
     }
   };
 
@@ -44,8 +50,6 @@ const DownloadPlugin = () => {
       }, 1000);
     }
   };
-
-  console.log(userInputLink, "INPUT_LINK");
 
   return (
     <>
@@ -78,6 +82,13 @@ const DownloadPlugin = () => {
             </Button>
           </Stack>
         </FormControl>
+      </Box>
+      <Box>
+        <Paragraph>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab commodi, perferendis id quo voluptatibus fugit
+          veniam suscipit vel harum earum reiciendis ex doloremque temporibus nam quasi laborum cupiditate itaque
+          eligendi!
+        </Paragraph>
       </Box>
     </>
   );
