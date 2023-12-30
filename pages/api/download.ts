@@ -20,7 +20,6 @@ type ExecResult = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ExecResult | { error: string }>) {
   // Run the middleware
   await runMiddleware(req, res, cors);
-
   if (req.method === "GET") {
     try {
       const url: string = req.query.url as string;
