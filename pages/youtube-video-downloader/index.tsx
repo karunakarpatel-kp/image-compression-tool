@@ -14,7 +14,6 @@ import Theme, { themeColors } from "@Theme/Theme";
 import { NextPageWithLayout } from "pages/_app";
 import { DateMonthYearForBlogPost, SEO_OBJ, blogPostsObj } from "Essentials";
 import HeadingOne from "@Components/Elements/Headings/HeadingOne";
-import ExtendFullPageLayout from "@Components/Layout/ExtendFullPage";
 import Subtitle from "@Components/Elements/Subtitle/Subtitle";
 import LastUpdateTags from "@Components/UI/LastUpdate&Tags/LastUpdateTags";
 import HeaderImageFullBlogPost from "@Components/UI/ImageCards/HeaderImageFullBlogPost";
@@ -25,29 +24,10 @@ import Footer from "@Components/UI/Footer";
 import Navigation from "@Components/UI/Navigation";
 import Sharing from "@Components/SocialShare/Sharing";
 import SingleVideoCard from "@Components/YTDownloader/SingleVideoCard";
+import { useSelector } from "react-redux";
+import { RootState } from "store/centralStore";
 
 const YoutubeVideoDownloader: NextPageWithLayout = () => {
-  const [data, setCompleteData] = useState({
-    data: null,
-    errorStatus: false,
-    loadingStatus: false,
-  });
-
-  const getData = (incomingData: any) => {
-    console.log(incomingData);
-    setCompleteData({ ...data, data: incomingData });
-  };
-  const getErrorStatus = (incomingErrorStatus: any) => {
-    console.log(incomingErrorStatus);
-    setCompleteData({ ...data, errorStatus: incomingErrorStatus });
-  };
-
-  const getLoadingStatus = (incomingLoadingStatus: any) => {
-    console.log({ ...data, loadingStatus: incomingLoadingStatus });
-  };
-
-  console.log("HI", data);
-
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -87,7 +67,7 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
                 lastUpdatedTime={DateMonthYearForBlogPost(SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.lastUpdateTime)}
                 tags={SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.tags!}
               />
-              <DownloadPlugin getData={getData} getErrorStatus={getErrorStatus} getLoadingStatus={getLoadingStatus} />
+              <DownloadPlugin />
             </Box>
           </Box>
           {/* <Box border={1} mt={-7}>
@@ -112,7 +92,7 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
           </Grid>
 
           <Grid item xs={12} sm={11} md={10} lg={9} minHeight="100vh">
-            <SingleVideoCard completeData={data} />
+            <SingleVideoCard />
             {/* Center Content */}
 
             {/* Sharing Icon Container In Below */}

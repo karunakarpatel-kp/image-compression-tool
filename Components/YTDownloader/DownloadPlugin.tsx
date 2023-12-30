@@ -17,39 +17,33 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import SingleVideoCard from "./SingleVideoCard";
 import { LoadingButton } from "@mui/lab";
+import { useDispatch, useSelector } from "react-redux";
+import { sendDataFromYT, sendInputURL, sendLoadingStatus, sendServiceError } from "store/utilitySlice";
+import { RootState } from "store/centralStore";
 
 const sampleVideURL = "https://www.youtube.com/watch?v=tbnLqRW9Ef0";
 
-interface DownloadPluginProps {
-  getData: (pushData: any) => void;
-  getErrorStatus: (error: any) => void;
-  getLoadingStatus: (loading: boolean) => void;
-}
-
-const DownloadPlugin = (props: DownloadPluginProps) => {
+const DownloadPlugin = () => {
+  const dispatch = useDispatch();
   const userInputRef = useRef<HTMLInputElement>();
+
+  const getLoadingStatus = useSelector((state: RootState) => state.utilitySlice.getLoadingStatus);
+
   const [userInputLink, setUserInputLink] = useState<string>("");
-  const [dataFromYT, setDataFromYT] = useState<any>(null);
   const [inputError, setInputError] = useState<boolean>(false);
-  const [loading, setIsLoading] = useState<boolean>(false);
 
   const handleDownload = async (incomingURL: string) => {
-    setIsLoading(true);
+    dispatch(sendLoadingStatus(true));
     try {
       const data: any = await axios.get(`/api/download?url=${incomingURL}`);
-      setDataFromYT(data);
-      props.getData(data); // Lifting Data up
-      setIsLoading(false);
+      dispatch(sendDataFromYT(data));
+      dispatch(sendLoadingStatus(false));
+
+      dispatch(sendServiceError(null));
     } catch (error: any) {
-      console.log(error, "Error FrontEnd");
-      props.getErrorStatus(error); // Catching Error For API Call...!
-      setIsLoading(false);
-      // if (error.response.status === 500) {
-      //   alert("Please Enter Correct Youtube URL");
-      // }
-      // if (error.response.status === 405) {
-      //   alert("Bad Request Broo..!");
-      // }
+      dispatch(sendServiceError(error));
+      dispatch(sendDataFromYT(null));
+      dispatch(sendLoadingStatus(false));
     }
   };
 
@@ -60,6 +54,7 @@ const DownloadPlugin = (props: DownloadPluginProps) => {
     } else {
       setInputError(false);
       setUserInputLink(captureUserInput);
+      dispatch(sendInputURL(captureUserInput));
       handleDownload(captureUserInput);
     }
   };
@@ -79,10 +74,6 @@ const DownloadPlugin = (props: DownloadPluginProps) => {
       }, 1000);
     }
   };
-
-  useEffect(() => {
-    props.getLoadingStatus(loading);
-  }, [loading, props]);
 
   return (
     <>
@@ -120,7 +111,7 @@ const DownloadPlugin = (props: DownloadPluginProps) => {
             </Button> */}
             <LoadingButton
               onClick={onStartClickHandler}
-              loading={loading}
+              loading={getLoadingStatus}
               sx={{ bgcolor: "white", color: "primary.main" }}
               variant="outlined"
             >

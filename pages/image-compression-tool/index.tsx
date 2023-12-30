@@ -14,7 +14,6 @@ import { themeColors } from "@Theme/Theme";
 import { NextPageWithLayout } from "pages/_app";
 import { DateMonthYearForBlogPost, SEO_OBJ, blogPostsObj } from "Essentials";
 import HeadingOne from "@Components/Elements/Headings/HeadingOne";
-import ExtendFullPageLayout from "@Components/Layout/ExtendFullPage";
 import Subtitle from "@Components/Elements/Subtitle/Subtitle";
 import LastUpdateTags from "@Components/UI/LastUpdate&Tags/LastUpdateTags";
 import HeaderImageFullBlogPost from "@Components/UI/ImageCards/HeaderImageFullBlogPost";
@@ -59,5 +58,5 @@ const ImageCompressionTool: NextPageWithLayout = () => {
 export default ImageCompressionTool;
 
 ImageCompressionTool.getLayout = function getLayout(page) {
-  return <ExtendFullPageLayout>{page}</ExtendFullPageLayout>;
+  return <MainLayout>{page}</MainLayout>;
 };

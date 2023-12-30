@@ -1,13 +1,9 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
 import { Box, Button, Grid, Paper, Stack } from "@mui/material";
 import React from "react";
-interface SingleVideoCardProps {
-  completeData: any;
-}
 
-const SingleVideoCard = (props: SingleVideoCardProps) => {
+const SingleVideoCard = () => {
   // const { qualityLabel, quality, url, width, hasVideo, hasAudio, height } = props.formatName;
-  console.log(props.completeData);
   return (
     <>
       <Grid
