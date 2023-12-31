@@ -26,8 +26,15 @@ import Sharing from "@Components/SocialShare/Sharing";
 import SingleVideoCard from "@Components/YTDownloader/SingleVideoCard";
 import { useSelector } from "react-redux";
 import { RootState } from "store/centralStore";
+import DialogContainer from "@Components/UI/Dialogs/DialogContainer";
 
 const YoutubeVideoDownloader: NextPageWithLayout = () => {
+  const getDataFromYT = useSelector((state: RootState) => state.utilitySlice.getDataFromYT);
+  const getLoadingStatus = useSelector((state: RootState) => state.utilitySlice.getLoadingStatus);
+  const getAPIServiceError = useSelector((state: RootState) => state.utilitySlice.getAPIServiceError);
+
+  console.log(getDataFromYT, getLoadingStatus, getAPIServiceError);
+
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -122,6 +129,7 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
         </Grid>
 
         <Footer />
+        <DialogContainer />
       </ThemeProvider>
     </>
   );

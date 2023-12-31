@@ -1,9 +1,12 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
 import { Box, Button, Grid, Paper, Stack } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "store/centralStore";
 
 const SingleVideoCard = () => {
-  // const { qualityLabel, quality, url, width, hasVideo, hasAudio, height } = props.formatName;
+  const getDataFromYT = useSelector((state: RootState) => state.utilitySlice.getDataFromYT);
+  console.log(getDataFromYT);
   return (
     <>
       <Grid

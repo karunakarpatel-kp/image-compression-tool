@@ -7,6 +7,7 @@ interface initialStateProps {
   getAPIServiceError: any;
   getLoadingStatus: boolean;
   getUserInputURL: string;
+  getOpenDialogBoxStatus: boolean;
 }
 
 const initialState: initialStateProps = {
@@ -15,6 +16,7 @@ const initialState: initialStateProps = {
   getAPIServiceError: null,
   getLoadingStatus: false,
   getUserInputURL: "",
+  getOpenDialogBoxStatus: true,
 };
 
 const utilitySlice = createSlice({
@@ -36,11 +38,13 @@ const utilitySlice = createSlice({
     sendInputURL: (state, action: PayloadAction<string>) => {
       state.getUserInputURL = action.payload;
     },
+    setOpenDialogBox: (state, action: PayloadAction<boolean>) => {
+      state.getOpenDialogBoxStatus = action.payload;
+    },
   },
 });
 
 export default utilitySlice.reducer;
 
-export const { setOpenModal, sendDataFromYT, sendServiceError, sendLoadingStatus, sendInputURL } = utilitySlice.actions;
-
-// export const openModalValue = ( state: RootState ) => state.setOpenModal.openModal;
+export const { setOpenModal, sendDataFromYT, sendServiceError, sendLoadingStatus, sendInputURL, setOpenDialogBox } =
+  utilitySlice.actions;
