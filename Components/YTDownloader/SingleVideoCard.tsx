@@ -29,7 +29,7 @@ const SingleVideoCard = () => {
           p={1}
           sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
         >
-          <iframe width="570" height="320" src={"/"} title="video" />
+          <iframe width="570" height="320" src={""} title="video" />
         </Grid>
         <Grid item xs={12} sm={12} md={7} lg={7} border={0} p={2} position="relative">
           <Paragraph>

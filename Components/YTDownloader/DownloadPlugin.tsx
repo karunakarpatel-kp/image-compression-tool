@@ -19,12 +19,13 @@ import SingleVideoCard from "./SingleVideoCard";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { sendDataFromYT, sendInputURL, sendLoadingStatus, sendServiceError } from "store/utilitySlice";
-import { RootState } from "store/centralStore";
+import { AppDispatch, RootState } from "store/centralStore";
+import { callYTAPIService } from "store/YTAPISlice";
 
 const sampleVideURL = "https://www.youtube.com/watch?v=tbnLqRW9Ef0";
 
 const DownloadPlugin = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const userInputRef = useRef<HTMLInputElement>();
 
   const getLoadingStatus = useSelector((state: RootState) => state.utilitySlice.getLoadingStatus);
@@ -33,18 +34,20 @@ const DownloadPlugin = () => {
   const [inputError, setInputError] = useState<boolean>(false);
 
   const handleDownload = async (incomingURL: string) => {
-    dispatch(sendLoadingStatus(true));
-    try {
-      const data: any = await axios.get(`/api/download?url=${incomingURL}`);
-      dispatch(sendDataFromYT(data));
-      dispatch(sendLoadingStatus(false));
+    dispatch(callYTAPIService(incomingURL));
 
-      dispatch(sendServiceError(null));
-    } catch (error: any) {
-      dispatch(sendServiceError(error));
-      dispatch(sendDataFromYT(null));
-      dispatch(sendLoadingStatus(false));
-    }
+    // dispatch(sendLoadingStatus(true));
+    // try {
+    //   const data: any = await axios.get(`/api/download?url=${incomingURL}`);
+    //   dispatch(sendDataFromYT(data));
+    //   dispatch(sendLoadingStatus(false));
+
+    //   dispatch(sendServiceError(null));
+    // } catch (error: any) {
+    //   dispatch(sendServiceError(error));
+    //   dispatch(sendDataFromYT(null));
+    //   dispatch(sendLoadingStatus(false));
+    // }
   };
 
   const onStartClickHandler = () => {
