@@ -17,8 +17,6 @@ const initialState: initialStateProps = {
 
 export const callYTAPIService = createAsyncThunk("getDataFromYT", async (incomingURL: string, thunkAPI) => {
   const APIURL = `/api/download?url=${incomingURL}`;
-  // const response = await axios(APIURL);
-  // return response.data;
   try {
     const response = await axios(APIURL);
     return response.data;

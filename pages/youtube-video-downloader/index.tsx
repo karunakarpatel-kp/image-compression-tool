@@ -27,6 +27,7 @@ import SingleVideoCard from "@Components/YTDownloader/SingleVideoCard";
 import { useSelector } from "react-redux";
 import { RootState } from "store/centralStore";
 import DialogContainer from "@Components/UI/Dialogs/DialogContainer";
+import ModalContainer from "@Components/UI/Modals/ModalContainer";
 
 const YoutubeVideoDownloader: NextPageWithLayout = () => {
   const getDataFromYT = useSelector((state: RootState) => state.utilitySlice.getDataFromYT);
@@ -129,6 +130,7 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
         </Grid>
 
         <Footer />
+        <ModalContainer />
         <DialogContainer />
       </ThemeProvider>
     </>

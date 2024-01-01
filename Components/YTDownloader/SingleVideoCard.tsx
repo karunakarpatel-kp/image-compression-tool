@@ -1,11 +1,17 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
 import { Box, Button, Grid, Paper, Stack } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "store/centralStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "store/centralStore";
+import { setOpenModal } from "store/utilitySlice";
 
-const SingleVideoCard = () => {
+const SingleVideoCard: any = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const ytAPIServiceOBJ = useSelector((state: RootState) => state.YTAPISlice);
+
+  const onDownloadClickHandler = () => {
+    dispatch(setOpenModal(true));
+  };
 
   if (ytAPIServiceOBJ.status === "PENDING") {
     return (
@@ -28,16 +34,14 @@ const SingleVideoCard = () => {
   }
 
   if (ytAPIServiceOBJ.status === "FULFILLED") {
-    const data = ytAPIServiceOBJ.data.data;
-    const metaInfo = ytAPIServiceOBJ.data.metaInfo.videoDetails;
-    console.log(metaInfo);
+    const incomingYTData = ytAPIServiceOBJ.data.data;
+    const incomingYTMetaInfa = ytAPIServiceOBJ.data.metaInfo.videoDetails;
     return (
       <>
-        {data.info.map((singleVideoInfo: any) => {
-          console.log(singleVideoInfo, "SINGLEVIDEOINFO");
+        {incomingYTData.info.map((singleVideoInfo: any, index: any) => {
           const { quality, qualityLabel, url, hasVideo, hasAudio, container } = singleVideoInfo;
           return (
-            <>
+            <React.Fragment key={index}>
               <Grid
                 container
                 direction="row"
@@ -61,14 +65,13 @@ const SingleVideoCard = () => {
                   <iframe width="100%" height="320" src={url} title="video" />
                 </Grid>
                 <Grid item xs={12} sm={12} md={7} lg={7} border={0} p={2} position="relative">
-                  {/* <Paragraph>
-            <span style={{ color: "primary.main", fontWeight: "bold" }}>Title</span>: Lorem ipsum dolor sit amet quis!
-          </Paragraph>
-          <Paragraph>
-            <span style={{ color: "primary.main", fontWeight: "bold" }}>Description</span>: Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Ullam quia placeat dicta, voluptate tempora esse at. Eos sapiente ducimus
-            quis!
-          </Paragraph> */}
+                  <Paragraph>
+                    <span style={{ color: "primary.main", fontWeight: "bold" }}>Title</span>: {incomingYTMetaInfa.title}
+                  </Paragraph>
+                  <Paragraph>
+                    <span style={{ color: "primary.main", fontWeight: "bold" }}>Description</span>:{" "}
+                    {incomingYTMetaInfa.description.split("").slice(0, 120)}
+                  </Paragraph>
                   <Stack direction="row" border={0} display="flex" mt={5}>
                     <Box sx={{ flexGrow: 1 }}>
                       <Paragraph>Has Video: {hasVideo ? "True" : "False"}</Paragraph>
@@ -81,11 +84,13 @@ const SingleVideoCard = () => {
                     </Box>
                   </Stack>
                   <Box textAlign="center" mt={3} mb={1}>
-                    <Button variant="contained">Download Video</Button>
+                    <Button variant="contained" onClick={onDownloadClickHandler}>
+                      Download Video
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>
-            </>
+            </React.Fragment>
           );
         })}
       </>
