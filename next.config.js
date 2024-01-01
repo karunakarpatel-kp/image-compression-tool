@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cars.tatamotors.com",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
     ],
   },
 };

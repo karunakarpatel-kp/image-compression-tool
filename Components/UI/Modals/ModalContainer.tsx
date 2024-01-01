@@ -16,7 +16,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  // width: 400,
   bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
@@ -26,32 +26,32 @@ const style = {
 const ModalContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
   const openModalStatus = useSelector((state: RootState) => state.utilitySlice.openModal);
+  const getVideoURL = useSelector((state: RootState) => state.utilitySlice.videoURL);
+
   const handleClose = () => {
     dispatch(setOpenModal(false));
   };
+
   const onCloseBtnClickHandler = () => {
     dispatch(setOpenModal(false));
   };
+
   return (
     <Modal
       open={openModalStatus}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      sx={{ position: "relative" }}
+      // sx={{ position: "relative" }}
     >
       <Box sx={style}>
         <Button variant="contained" sx={{ position: "absolute", right: 10 }} onClick={onCloseBtnClickHandler}>
           Close
         </Button>
-        {/* <IconButton onClick={onCloseBtnClickHandler} sx={{ position: "absolute", right: 10 }}>
-          <Close />
-        </IconButton> */}
         <HeadingSix title="Download the video " />
-        <Paragraph>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur vel sit cum aperiam inventore tenetur
-          temporibus quo porro! Amet porro ducimus sed, illo rem sapiente eveniet obcaecati quia voluptatem magnam!
-        </Paragraph>
+        <Box>
+          <iframe src={getVideoURL} width={600} height={300} />
+        </Box>
       </Box>
     </Modal>
   );

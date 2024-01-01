@@ -1,8 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const incomingURL = "/";
-
 interface initialStateProps {
   data: any;
   status: "" | "PENDING" | "FULFILLED" | "REJECTED";

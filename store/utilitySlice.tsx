@@ -8,6 +8,7 @@ interface initialStateProps {
   getLoadingStatus: boolean;
   getUserInputURL: string;
   getOpenDialogBoxStatus: boolean;
+  videoURL: string;
 }
 
 const initialState: initialStateProps = {
@@ -17,6 +18,7 @@ const initialState: initialStateProps = {
   getLoadingStatus: false,
   getUserInputURL: "",
   getOpenDialogBoxStatus: true,
+  videoURL: "",
 };
 
 const utilitySlice = createSlice({
@@ -41,10 +43,20 @@ const utilitySlice = createSlice({
     setOpenDialogBox: (state, action: PayloadAction<boolean>) => {
       state.getOpenDialogBoxStatus = action.payload;
     },
+    sendVideoURL: (state, action: PayloadAction<string>) => {
+      state.videoURL = action.payload;
+    },
   },
 });
 
 export default utilitySlice.reducer;
 
-export const { setOpenModal, sendDataFromYT, sendServiceError, sendLoadingStatus, sendInputURL, setOpenDialogBox } =
-  utilitySlice.actions;
+export const {
+  setOpenModal,
+  sendDataFromYT,
+  sendServiceError,
+  sendLoadingStatus,
+  sendInputURL,
+  setOpenDialogBox,
+  sendVideoURL,
+} = utilitySlice.actions;

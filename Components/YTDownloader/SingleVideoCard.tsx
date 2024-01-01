@@ -1,16 +1,19 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
 import { Box, Button, Grid, Paper, Stack } from "@mui/material";
+import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store/centralStore";
-import { setOpenModal } from "store/utilitySlice";
+import { sendVideoURL, setOpenModal } from "store/utilitySlice";
 
 const SingleVideoCard: any = () => {
   const dispatch = useDispatch<AppDispatch>();
   const ytAPIServiceOBJ = useSelector((state: RootState) => state.YTAPISlice);
 
-  const onDownloadClickHandler = () => {
+  const onDownloadClickHandler = (url: string, index: string) => {
     dispatch(setOpenModal(true));
+    const incomingYTData = ytAPIServiceOBJ.data.data;
+    dispatch(sendVideoURL(incomingYTData.info[index].url));
   };
 
   if (ytAPIServiceOBJ.status === "PENDING") {
@@ -36,6 +39,10 @@ const SingleVideoCard: any = () => {
   if (ytAPIServiceOBJ.status === "FULFILLED") {
     const incomingYTData = ytAPIServiceOBJ.data.data;
     const incomingYTMetaInfa = ytAPIServiceOBJ.data.metaInfo.videoDetails;
+
+    console.log(incomingYTMetaInfa);
+    // dispatch(sendVideoURL(incomingYTData.info[0].url));
+    // dispatch(sendVideoURL(incomingYTData.info));
     return (
       <>
         {incomingYTData.info.map((singleVideoInfo: any, index: any) => {
@@ -62,7 +69,8 @@ const SingleVideoCard: any = () => {
                   p={1}
                   sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
                 >
-                  <iframe width="100%" height="320" src={url} title="video" />
+                  {/* <iframe width="100%" height="320" src={url} title="video" /> */}
+                  <Image src={incomingYTMetaInfa.thumbnails[0].url} width={500} height={320} alt={url} />
                 </Grid>
                 <Grid item xs={12} sm={12} md={7} lg={7} border={0} p={2} position="relative">
                   <Paragraph>
@@ -84,7 +92,7 @@ const SingleVideoCard: any = () => {
                     </Box>
                   </Stack>
                   <Box textAlign="center" mt={3} mb={1}>
-                    <Button variant="contained" onClick={onDownloadClickHandler}>
+                    <Button variant="contained" onClick={() => onDownloadClickHandler(url, index)}>
                       Download Video
                     </Button>
                   </Box>
