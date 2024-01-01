@@ -24,11 +24,11 @@ import { callYTAPIService } from "store/YTAPISlice";
 
 const sampleVideURL = "https://www.youtube.com/watch?v=tbnLqRW9Ef0";
 
-const DownloadPlugin = () => {
+const DownloadPlugin: any = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userInputRef = useRef<HTMLInputElement>();
 
-  const getLoadingStatus = useSelector((state: RootState) => state.utilitySlice.getLoadingStatus);
+  const getLoadingStatus = useSelector((state: RootState) => state.YTAPISlice.status);
 
   const [userInputLink, setUserInputLink] = useState<string>("");
   const [inputError, setInputError] = useState<boolean>(false);
@@ -114,7 +114,7 @@ const DownloadPlugin = () => {
             </Button> */}
             <LoadingButton
               onClick={onStartClickHandler}
-              loading={getLoadingStatus}
+              loading={getLoadingStatus === "PENDING" && true}
               sx={{ bgcolor: "white", color: "primary.main" }}
               variant="outlined"
             >

@@ -17,7 +17,7 @@ type ExecResult = {
   info: videoFormat[];
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ExecResult | { error: string }>) {
+export default async function handler(req: NextApiRequest, res: any) {
   // Run the middleware
   await runMiddleware(req, res, cors);
   if (req.method === "GET") {
@@ -30,10 +30,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         url: "https://www.youtube.com/embed/" + videoId,
         info: metaInfo.formats,
       };
-
-      return res.json(data);
-    } catch (error) {
-      console.error("An error occurred:", error);
+      const totalData = { data, metaInfo };
+      return res.json(totalData);
+    } catch (error: any) {
+      console.error("An error occurred BACKEND:", error);
+      // return res;
       return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {

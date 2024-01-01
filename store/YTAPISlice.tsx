@@ -5,27 +5,25 @@ const incomingURL = "/";
 
 interface initialStateProps {
   data: any;
-  status: "PENDING" | "FULFILLED" | "REJECTED";
+  status: "" | "PENDING" | "FULFILLED" | "REJECTED";
   error: any;
 }
 
 const initialState: initialStateProps = {
   data: null,
-  status: "PENDING",
+  status: "",
   error: null,
 };
 
 export const callYTAPIService = createAsyncThunk("getDataFromYT", async (incomingURL: string, thunkAPI) => {
   const APIURL = `/api/download?url=${incomingURL}`;
-  const response = await axios(APIURL);
+  // const response = await axios(APIURL);
   // return response.data;
-
   try {
     const response = await axios(APIURL);
     return response.data;
-  } catch (error) {
-    console.log(error, "ERROR FRONTEND");
-    return error;
+  } catch (error: any) {
+    return error.message;
   }
 });
 
@@ -40,8 +38,14 @@ const YTAPISlice = createSlice({
     builder.addCase(callYTAPIService.fulfilled, (state, action: PayloadAction<any>) => {
       state.data = action.payload;
       state.status = "FULFILLED";
+      state.error = "";
+      if (action.payload === "Request failed with status code 500") {
+        state.error = action.payload;
+        state.status = "REJECTED";
+      }
     });
     builder.addCase(callYTAPIService.rejected, (state, action) => {
+      console.log(action.payload, "REJECTED CASE");
       state.error = action.payload;
       state.status = "REJECTED";
     });
