@@ -35,19 +35,6 @@ const DownloadPlugin: any = () => {
 
   const handleDownload = async (incomingURL: string) => {
     dispatch(callYTAPIService(incomingURL));
-
-    // dispatch(sendLoadingStatus(true));
-    // try {
-    //   const data: any = await axios.get(`/api/download?url=${incomingURL}`);
-    //   dispatch(sendDataFromYT(data));
-    //   dispatch(sendLoadingStatus(false));
-
-    //   dispatch(sendServiceError(null));
-    // } catch (error: any) {
-    //   dispatch(sendServiceError(error));
-    //   dispatch(sendDataFromYT(null));
-    //   dispatch(sendLoadingStatus(false));
-    // }
   };
 
   const onStartClickHandler = () => {
@@ -80,9 +67,9 @@ const DownloadPlugin: any = () => {
 
   return (
     <>
-      <Box mt={8} mb={1} border={0}>
+      <Box mt={8} mb={1} border={0} borderColor="white">
         <FormControl fullWidth sx={{ m: 1, color: "white", borderColor: "white" }} error={inputError}>
-          <Stack direction="row" spacing={1}>
+          <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} spacing={2} width="100%">
             <InputLabel htmlFor="outlined-adornment-amount">Link</InputLabel>
             <OutlinedInput
               inputProps={{ style: { color: "white" } }}
@@ -90,7 +77,7 @@ const DownloadPlugin: any = () => {
               inputRef={userInputRef}
               onBlur={onBlurHandler}
               sx={{
-                width: 4 / 5,
+                width: { xs: 5 / 5, sm: 5 / 5, md: 3 / 5, lg: 3 / 5 },
                 color: "white",
                 ".MuiOutlinedInput-notchedOutline": { borderColor: "white" },
               }}

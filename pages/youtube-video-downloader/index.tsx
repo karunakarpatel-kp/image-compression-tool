@@ -28,14 +28,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/centralStore";
 import DialogContainer from "@Components/UI/Dialogs/DialogContainer";
 import ModalContainer from "@Components/UI/Modals/ModalContainer";
+import Image from "next/image";
+import WelcomeSVG from "@Public/welcome.svg";
 
 const YoutubeVideoDownloader: NextPageWithLayout = () => {
-  const getDataFromYT = useSelector((state: RootState) => state.utilitySlice.getDataFromYT);
-  const getLoadingStatus = useSelector((state: RootState) => state.utilitySlice.getLoadingStatus);
-  const getAPIServiceError = useSelector((state: RootState) => state.utilitySlice.getAPIServiceError);
-
-  console.log(getDataFromYT, getLoadingStatus, getAPIServiceError);
-
+  const getDataLoadingStatus = useSelector((state: RootState) => state.YTAPISlice.status);
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -48,7 +45,7 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
           lastUpdatedTime={SEO_OBJ.YOUTUBE_VIDEO_DOWNLOAD_PAGE.lastUpdateTime}
         />
         <Navigation />
-        <Grid container direction="row" spacing={0} mt={8} border={1}>
+        <Grid container direction="row" spacing={0} mt={8} border={0}>
           <Box
             sx={{
               border: "1",
@@ -63,9 +60,14 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
               sx={{ mb: { xs: 2, sm: 2, md: 3, lg: 3, color: "white" } }}
               id="title"
             >
-              Youtube Video Downloader
+              Download Youtube Videos For Free of Cost By This AI Tool.
             </Typography>
-            <Box width={3 / 5} margin="auto" border={0} borderColor="white">
+            <Box
+              margin="auto"
+              border={0}
+              borderColor="white"
+              sx={{ width: { xs: 5 / 5, sm: 5 / 5, md: 3 / 5, lg: 3 / 5 } }}
+            >
               <Typography variant="blogPostBrandSubheading" mb={6} mt={5}>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis at quam, beatae optio magni libero
                 sint tempore? Quae, ea voluptatibus quos expedita inventore enim similique amet a incidunt molestiae
@@ -100,6 +102,26 @@ const YoutubeVideoDownloader: NextPageWithLayout = () => {
           </Grid>
 
           <Grid item xs={12} sm={11} md={10} lg={9} minHeight="100vh">
+            {getDataLoadingStatus === "" && (
+              <Grid
+                container
+                direction="column"
+                border={0}
+                mt={2}
+                component={Paper}
+                elevation={0}
+                // sx={{ pl: { xs: 2, sm: 2, md: 0, lg: 0 }, pr: { xs: 2, sm: 2, md: 0, lg: 0 } }}
+                minHeight={400}
+                p={5}
+                textAlign="center"
+              >
+                <Box margin="auto" mb={2}>
+                  <Image src={WelcomeSVG} width={300} height={300} alt="Hi" />
+                </Box>
+                <Paragraph>Please Enter Any URL Above to start using this feature</Paragraph>
+              </Grid>
+            )}
+
             <SingleVideoCard />
             {/* Center Content */}
 

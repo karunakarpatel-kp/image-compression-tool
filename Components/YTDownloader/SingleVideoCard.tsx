@@ -1,10 +1,12 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
-import { Box, Button, Grid, Paper, Stack } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Grid, IconButton, Paper, Skeleton, Stack } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store/centralStore";
 import { sendVideoURL, setOpenModal } from "store/utilitySlice";
+import EmptySVG from "@Public/empty.svg";
+import { CheckCircle } from "@mui/icons-material";
 
 const SingleVideoCard: any = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,9 +21,55 @@ const SingleVideoCard: any = () => {
   if (ytAPIServiceOBJ.status === "PENDING") {
     return (
       <>
-        <Box>
-          <Paragraph>Loadig...!</Paragraph>
-        </Box>
+        {[1, 2].map((index: any) => {
+          return (
+            <React.Fragment key={index}>
+              <Grid
+                container
+                direction="row"
+                border={0}
+                mt={2}
+                mb={2}
+                component={Paper}
+                elevation={4}
+                sx={{ pl: { xs: 2, sm: 2, md: 0, lg: 0 }, pr: { xs: 2, sm: 2, md: 0, lg: 0 } }}
+                minHeight={200}
+              >
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={5}
+                  lg={5}
+                  border={0}
+                  p={1}
+                  sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                >
+                  {/* <iframe width="100%" height="320" src={url} title="video" /> */}
+                  <Skeleton height={329} width="100%" animation="wave" variant="rectangular" sx={{ margin: 0, p: 0 }} />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={7}
+                  lg={7}
+                  border={0}
+                  p={2}
+                  position="relative"
+                  display={{ xs: "none", sm: "none", md: "block", lg: "block" }}
+                >
+                  <Stack spacing={1}>
+                    <Skeleton variant="rectangular" animation="wave" height={90} />
+                    <Skeleton variant="rectangular" animation="wave" height={50} />
+                    <Skeleton variant="rectangular" animation="wave" height={60} />
+                    <Skeleton variant="rectangular" animation="wave" height={100} />
+                  </Stack>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          );
+        })}
       </>
     );
   }
@@ -29,9 +77,24 @@ const SingleVideoCard: any = () => {
   if (ytAPIServiceOBJ.status === "REJECTED") {
     return (
       <>
-        <Box>
-          <Paragraph>Rejected With Some Reason...!</Paragraph>
-        </Box>
+        <Grid
+          container
+          direction="column"
+          border={0}
+          mt={2}
+          component={Paper}
+          elevation={0}
+          // sx={{ pl: { xs: 2, sm: 2, md: 0, lg: 0 }, pr: { xs: 2, sm: 2, md: 0, lg: 0 } }}
+          minHeight={400}
+          p={5}
+          textAlign="center"
+        >
+          <Box margin="auto" mb={2}>
+            <Image src={EmptySVG} width={300} height={300} alt="Hi" />
+          </Box>
+
+          <Paragraph>The URL That you had pasted was unable to fetch please enter some other url</Paragraph>
+        </Grid>
       </>
     );
   }
@@ -39,10 +102,6 @@ const SingleVideoCard: any = () => {
   if (ytAPIServiceOBJ.status === "FULFILLED") {
     const incomingYTData = ytAPIServiceOBJ.data.data;
     const incomingYTMetaInfa = ytAPIServiceOBJ.data.metaInfo.videoDetails;
-
-    console.log(incomingYTMetaInfa);
-    // dispatch(sendVideoURL(incomingYTData.info[0].url));
-    // dispatch(sendVideoURL(incomingYTData.info));
     return (
       <>
         {incomingYTData.info.map((singleVideoInfo: any, index: any) => {
@@ -69,10 +128,31 @@ const SingleVideoCard: any = () => {
                   p={1}
                   sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
                 >
-                  {/* <iframe width="100%" height="320" src={url} title="video" /> */}
-                  <Image src={incomingYTMetaInfa.thumbnails[0].url} width={500} height={320} alt={url} />
+                  {/* For Desktops */}
+                  <Box display={{ xs: "none", sm: "none", md: "block", lg: "block" }} position="relative">
+                    <Image src={incomingYTMetaInfa.thumbnails[4].url} width={520} height={300} alt={url} />
+                    <Button sx={{ position: "absolute", left: 2, top: 3, bgcolor: "red" }} variant="contained">
+                      {qualityLabel ? qualityLabel : "NA"}
+                    </Button>
+                  </Box>
+                  {/* For Mobile Images */}
+                  <Box display={{ xs: "block", sm: "block", md: "none", lg: "none" }} position="relative">
+                    <Image src={incomingYTMetaInfa.thumbnails[0].url} width={360} height={250} alt={url} />
+                    <Button sx={{ position: "absolute", left: 2, top: 3, bgcolor: "red" }} variant="contained">
+                      {qualityLabel ? qualityLabel : "NA"}
+                    </Button>
+                  </Box>
                 </Grid>
-                <Grid item xs={12} sm={12} md={7} lg={7} border={0} p={2} position="relative">
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={7}
+                  lg={7}
+                  border={0}
+                  p={{ xs: 0, sm: 0, md: 2, lg: 2 }}
+                  position="relative"
+                >
                   <Paragraph>
                     <span style={{ color: "primary.main", fontWeight: "bold" }}>Title</span>: {incomingYTMetaInfa.title}
                   </Paragraph>
@@ -80,19 +160,42 @@ const SingleVideoCard: any = () => {
                     <span style={{ color: "primary.main", fontWeight: "bold" }}>Description</span>:{" "}
                     {incomingYTMetaInfa.description.split("").slice(0, 120)}
                   </Paragraph>
-                  <Stack direction="row" border={0} display="flex" mt={5}>
+                  <Stack
+                    direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+                    border={0}
+                    display="flex"
+                    mt={5}
+                    spacing={2}
+                  >
                     <Box sx={{ flexGrow: 1 }}>
-                      <Paragraph>Has Video: {hasVideo ? "True" : "False"}</Paragraph>
+                      <Alert severity="success">
+                        <AlertTitle>Video</AlertTitle>
+                        {hasVideo ? "True" : "False"}
+                      </Alert>
+                      {/* <Paragraph>Has Video: {hasVideo ? "True" : "False"}</Paragraph> */}
                     </Box>
                     <Box sx={{ flexGrow: 1 }}>
-                      <Paragraph>Has Audio: {hasAudio ? "True" : "False"}</Paragraph>
+                      <Alert severity="error">
+                        <AlertTitle>Audio</AlertTitle>
+                        {hasAudio ? "True" : "False"}
+                      </Alert>
+                      {/* <Paragraph>Has Audio: {hasAudio ? "True" : "False"}</Paragraph> */}
                     </Box>
                     <Box sx={{ flexGrow: 1 }}>
-                      <Paragraph>Label : {qualityLabel}</Paragraph>
+                      <Alert>
+                        <AlertTitle>Label</AlertTitle>
+                        {qualityLabel}
+                      </Alert>
+                      {/* <Paragraph>Label : {qualityLabel}</Paragraph> */}
                     </Box>
                   </Stack>
-                  <Box textAlign="center" mt={3} mb={1}>
-                    <Button variant="contained" onClick={() => onDownloadClickHandler(url, index)}>
+                  <Box textAlign="center" mt={3} mb={2}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{ width: 4 / 5 }}
+                      onClick={() => onDownloadClickHandler(url, index)}
+                    >
                       Download Video
                     </Button>
                   </Box>
