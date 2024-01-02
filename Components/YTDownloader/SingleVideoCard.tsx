@@ -211,7 +211,7 @@ const SingleVideoCard: any = () => {
                     <Box sx={{ flexGrow: 1 }}>
                       <Alert severity="info">
                         <AlertTitle>Label</AlertTitle>
-                        {qualityLabel}
+                        {qualityLabel ? qualityLabel : "NA"}
                       </Alert>
                       {/* <Paragraph>Label : {qualityLabel}</Paragraph> */}
                     </Box>

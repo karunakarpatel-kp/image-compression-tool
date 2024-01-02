@@ -85,7 +85,6 @@ const Home: NextPageWithLayout = () => {
           <ArrowForwardIcon fontSize="small" sx={{ ml: "2px" }} />
         </Link>
       </Box>
-
       {/* <RectangularAd /> */}
     </>
   );
