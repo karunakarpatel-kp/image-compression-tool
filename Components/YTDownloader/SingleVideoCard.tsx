@@ -137,7 +137,7 @@ const SingleVideoCard: any = () => {
                   </Box>
                   {/* For Mobile Images */}
                   <Box display={{ xs: "block", sm: "block", md: "none", lg: "none" }} position="relative">
-                    <Image src={incomingYTMetaInfa.thumbnails[0].url} width={360} height={250} alt={url} />
+                    <Image src={incomingYTMetaInfa.thumbnails[4].url} width={360} height={250} alt={url} />
                     <Button sx={{ position: "absolute", left: 2, top: 3, bgcolor: "red" }} variant="contained">
                       {qualityLabel ? qualityLabel : "NA"}
                     </Button>
@@ -158,7 +158,9 @@ const SingleVideoCard: any = () => {
                   </Paragraph>
                   <Paragraph>
                     <span style={{ color: "primary.main", fontWeight: "bold" }}>Description</span>:{" "}
-                    {incomingYTMetaInfa.description.split("").slice(0, 120)}
+                    {incomingYTMetaInfa.description !== null
+                      ? incomingYTMetaInfa.description.split("").slice(0, 120)
+                      : "There is no description for this video"}
                   </Paragraph>
                   <Stack
                     direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
