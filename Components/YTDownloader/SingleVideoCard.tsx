@@ -1,5 +1,5 @@
 import Paragraph from "@Components/Elements/Paragraph/Paragraph";
-import { Alert, AlertTitle, Box, Button, Grid, IconButton, Paper, Skeleton, Stack } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, ButtonGroup, Grid, IconButton, Paper, Skeleton, Stack } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -136,9 +136,24 @@ const SingleVideoCard: any = () => {
                       height={300}
                       alt={url}
                     />
-                    <Button sx={{ position: "absolute", left: 0, top: 0, bgcolor: "red" }} variant="contained">
-                      {qualityLabel ? qualityLabel : "NA"}
-                    </Button>
+                    <ButtonGroup
+                      variant="contained"
+                      sx={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        bgcolor: "red",
+                        backgroundColor: "red",
+                        ".MuiButtonGroup-grouped": {
+                          backgroundColor: "red",
+                        },
+                      }}
+                    >
+                      <Button variant="contained" sx={{ bgColor: "red" }}>
+                        {qualityLabel ? qualityLabel : "NA"}
+                      </Button>
+                      <Button variant="contained">{container ? container : "NA"}</Button>
+                    </ButtonGroup>
                   </Box>
                   {/* For Mobile Images */}
                   <Box display={{ xs: "block", sm: "block", md: "none", lg: "none" }} position="relative">
@@ -149,7 +164,7 @@ const SingleVideoCard: any = () => {
                       alt={url}
                     />
                     <Button sx={{ position: "absolute", left: 0, top: 0, bgcolor: "red" }} variant="contained">
-                      {qualityLabel ? qualityLabel : "NA"}
+                      {qualityLabel ? qualityLabel : "NA"}, {container ? container : "NA"}
                     </Button>
                   </Box>
                 </Grid>
@@ -180,21 +195,21 @@ const SingleVideoCard: any = () => {
                     spacing={2}
                   >
                     <Box sx={{ flexGrow: 1 }}>
-                      <Alert severity="success">
+                      <Alert severity={hasVideo ? "success" : "error"}>
                         <AlertTitle>Video</AlertTitle>
                         {hasVideo ? "True" : "False"}
                       </Alert>
                       {/* <Paragraph>Has Video: {hasVideo ? "True" : "False"}</Paragraph> */}
                     </Box>
                     <Box sx={{ flexGrow: 1 }}>
-                      <Alert severity="error">
+                      <Alert severity={hasAudio ? "success" : "error"}>
                         <AlertTitle>Audio</AlertTitle>
                         {hasAudio ? "True" : "False"}
                       </Alert>
                       {/* <Paragraph>Has Audio: {hasAudio ? "True" : "False"}</Paragraph> */}
                     </Box>
                     <Box sx={{ flexGrow: 1 }}>
-                      <Alert>
+                      <Alert severity="info">
                         <AlertTitle>Label</AlertTitle>
                         {qualityLabel}
                       </Alert>
