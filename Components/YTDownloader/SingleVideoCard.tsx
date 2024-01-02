@@ -130,15 +130,15 @@ const SingleVideoCard: any = () => {
                 >
                   {/* For Desktops */}
                   <Box display={{ xs: "none", sm: "none", md: "block", lg: "block" }} position="relative">
-                    <Image src={incomingYTMetaInfa.thumbnails[4].url} width={520} height={300} alt={url} />
-                    <Button sx={{ position: "absolute", left: 2, top: 3, bgcolor: "red" }} variant="contained">
+                    <Image src={incomingYTMetaInfa.thumbnails[4 ? 4 : 3].url} width={480} height={300} alt={url} />
+                    <Button sx={{ position: "absolute", left: 0, top: 0, bgcolor: "red" }} variant="contained">
                       {qualityLabel ? qualityLabel : "NA"}
                     </Button>
                   </Box>
                   {/* For Mobile Images */}
                   <Box display={{ xs: "block", sm: "block", md: "none", lg: "none" }} position="relative">
-                    <Image src={incomingYTMetaInfa.thumbnails[4].url} width={360} height={250} alt={url} />
-                    <Button sx={{ position: "absolute", left: 2, top: 3, bgcolor: "red" }} variant="contained">
+                    <Image src={incomingYTMetaInfa.thumbnails[4 ? 4 : 3].url} width={360} height={250} alt={url} />
+                    <Button sx={{ position: "absolute", left: 0, top: 0, bgcolor: "red" }} variant="contained">
                       {qualityLabel ? qualityLabel : "NA"}
                     </Button>
                   </Box>

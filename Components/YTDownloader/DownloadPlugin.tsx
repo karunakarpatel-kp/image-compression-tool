@@ -70,16 +70,24 @@ const DownloadPlugin: any = () => {
       <Box mt={8} mb={1} border={0} borderColor="white">
         <FormControl fullWidth sx={{ m: 1, color: "white" }} error={inputError}>
           <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row" }} spacing={2} width="100%">
-            <InputLabel htmlFor="outlined-adornment-amount">Link</InputLabel>
+            {/* <InputLabel htmlFor="outlined-adornment-amount">Link</InputLabel> */}
             <OutlinedInput
-              inputProps={{ style: { color: "white", outlineColor: "white", borderColor: "white" } }}
+              inputProps={{
+                style: {
+                  color: "white !important",
+                  outlineColor: "white",
+                  borderColor: "white",
+                  WebkitBoxShadow: "0 0 0 1000px #36106A inset",
+                },
+              }}
               placeholder="Please paste the url to download"
               inputRef={userInputRef}
               onBlur={onBlurHandler}
+              autoComplete="false"
               sx={{
                 width: { xs: 5 / 5, sm: 5 / 5, md: 5 / 5, lg: 5 / 5 },
                 color: "white",
-                ".MuiOutlinedInput-input": { border: "1px solid red" },
+                "&.MuiInputBase-root.MuiOutlinedInput-root": { border: "1px solid white" },
               }}
               id="outlined-adornment-amount"
               startAdornment={
@@ -99,7 +107,15 @@ const DownloadPlugin: any = () => {
             <LoadingButton
               onClick={onStartClickHandler}
               loading={getLoadingStatus === "PENDING" && true}
-              sx={{ bgcolor: "white", color: "primary.main", width: 2 / 5 }}
+              disableRipple
+              disableElevation
+              disableFocusRipple
+              sx={{
+                bgcolor: "white",
+                color: "primary.main",
+                width: 2 / 5,
+                "&.MuiButton-root.MuiLoadingButton-root:hover": { backgroundColor: "white" },
+              }}
               variant="outlined"
             >
               <span>Start Download</span>
